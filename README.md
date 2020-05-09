@@ -2,7 +2,7 @@
 
 ## About this app
 
-- This app was bootstrapped with [Create React App](https://create-react-app.dev/docs/getting-started).
+- This project was bootstrapped with [Create React App](https://create-react-app.dev/docs/getting-started).
 - This app is using [React](https://reactjs.org/) and [Express](https://expressjs.com/).
 - Libraries used: [Redux](https://redux.js.org/), [Formik](https://jaredpalmer.com/formik/docs/overview), [Axios](https://github.com/axios/axios), [React Router](https://reacttraining.com/react-router/web/guides/quick-start)
 - The react part is the the root folder, while the express part is in the `server` folder.
@@ -336,8 +336,6 @@ router.post('/webhook', (req, res) => {
 - previous step will return you a webhook signing secret, you need to place this in server/.env as `STRIPE_WEBHOOK_SECRET`
 - in another terminal window, run `stripe trigger payment_intent.succeeded`
 - After trigger succeeds, you should see in the other window, status `200` and that the charge and payment intent succeeded. Your server will also log `PaymentIntent was created! POST /payment/webhook 200`
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 11. Test the integration with our [test cards](https://stripe.com/docs/payments/accept-a-payment#web-test-integration).
 
