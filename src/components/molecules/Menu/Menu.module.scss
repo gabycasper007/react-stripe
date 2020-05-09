@@ -1,0 +1,42 @@
+.menu {
+  margin: 30px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+
+  li {
+    margin: 0;
+    padding: 0;
+
+    a {
+      text-decoration: none;
+      background-color: darkorchid;
+      color: white;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      padding: 10px 20px;
+      border-radius: 3px;
+
+      span {
+        background-color: white;
+        color: darkorchid;
+        border-radius: 50%;
+        display: inline-block;
+        width: 22px;
+        text-align: center;
+        height: 22px;
+        font-size: 14px;
+        line-height: 22px;
+        position: relative;
+        top: -1px;
+        margin-left: 6px;
+      }
+
+      &:hover {
+        background-color: firebrick;
+      }
+    }
+  }
+}

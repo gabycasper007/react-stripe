@@ -1,0 +1,88 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": [
+    "airbnb",
+    "prettier",
+    "prettier/react",
+    "plugin:prettier/recommended",
+    "eslint-config-prettier"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "rules": {
+    "react/jsx-filename-extension": [
+      2,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true
+      }
+    ],
+    "arrow-parens": "off",
+    "arrow-body-style": "off",
+    "class-methods-use-this": "off",
+    "comma-dangle": "off",
+    "default-case": "off",
+    "func-names": "off",
+    "global-require": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export": "off",
+    "implicit-arrow-linebreak": "off",
+    "max-len": "off",
+    "no-plusplus": "off",
+    "react/sort-comp": "off",
+    "no-unused-expressions": "off",
+    "no-underscore-dangle": "off",
+    "no-use-before-define": "off",
+    "no-return-assign": "off",
+    "no-param-reassign": "off",
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "no-nested-ternary": "off",
+    "object-curly-newline": "off",
+    "object-shorthand": "off",
+    "operator-linebreak": "off",
+    "prefer-destructuring": "off",
+    "react/no-did-update-set-state": "off",
+    "react/forbid-prop-types": "off",
+    "react/require-default-props": "off",
+    "react/no-array-index-key": "warn",
+    "react/no-unescaped-entities": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-wrap-multilines": "off",
+    "react/destructuring-assignment": "off",
+    "react/prefer-stateless-function": "off",
+    "no-case-declarations": "off",
+    "no-lonely-if": "off",
+    "import/no-named-as-default": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/label-has-for": "off"
+  },
+  "plugins": ["react", "prettier"],
+  "overrides": [
+    {
+      "files": ["*.test.js", "*-test.js", "*.spec.js"],
+      "rules": {
+        "no-unused-expressions": "off",
+        "no-undef": "off"
+      }
+    }
+  ]
+}

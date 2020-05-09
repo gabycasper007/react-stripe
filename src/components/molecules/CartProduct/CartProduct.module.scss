@@ -1,0 +1,28 @@
+.product {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid lightgray;
+
+  .nameAndImage {
+    display: flex;
+    align-items: center;
+    flex-grow: 3;
+    width: 150px;
+  }
+
+  img {
+    margin-right: 30px;
+  }
+  .prices {
+    flex-grow: 1;
+    text-align: right;
+    width: 100px;
+  }
+  .total {
+    flex-grow: 1;
+    text-align: right;
+    width: 100px;
+  }
+}
