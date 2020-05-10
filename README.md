@@ -21,14 +21,19 @@
 
 ## Stripe integration explanation
 
-1. Load Stripe in the react app in `src/index.js`:
+1. Install Stripe
+
+- on the front end: `npm i @stripe/react-stripe-js @stripe/stripe-js`
+- on the back end: `cd server && npm i stripe`
+
+2. Load Stripe in the react app in `src/index.js`:
 
 ```javascript
 import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 ```
 
-2. Wrap your app with the Stripe promise
+3. Wrap your app with the Stripe promise
 
 ```javascript
 import { Elements } from '@stripe/react-stripe-js';
@@ -37,9 +42,9 @@ import { Elements } from '@stripe/react-stripe-js';
 </Elements>;
 ```
 
-3. In `src/components/molecules/CardSection/CardSection.js`,
+4. In `src/components/molecules/CardSection/CardSection.js`,
 
-3a. Create the Stripe elements and respond to input changes
+4a. Create the Stripe elements and respond to input changes
 
 ```javascript
 import {
@@ -62,7 +67,7 @@ import {
 </label>
 ```
 
-3b. Style the Stripe form by injecting styles into the iframe
+4b. Style the Stripe form by injecting styles into the iframe
 
 ```javascript
 const CARD_ELEMENT_OPTIONS = {
@@ -91,7 +96,7 @@ const CARD_ELEMENT_OPTIONS = {
 <CardCvcElement onChange={handleChange} options={CARD_ELEMENT_OPTIONS} />
 ```
 
-3c. Stop the user from submitting multiple times, in order to avoid multiple charges. Also, show the Stripe error if any
+4c. Stop the user from submitting multiple times, in order to avoid multiple charges. Also, show the Stripe error if any
 
 ```javascript
 <button type="submit" disabled={!stripe || isSubmitting}>
@@ -102,7 +107,7 @@ const CARD_ELEMENT_OPTIONS = {
 }
 ```
 
-4. Include the `CardSection` component inside the `Formik` form in `src/components/organisms/Billing/Billing.js`
+5. Include the `CardSection` component inside the `Formik` form in `src/components/organisms/Billing/Billing.js`
 
 ```javascript
 <CardSection
@@ -113,23 +118,23 @@ const CARD_ELEMENT_OPTIONS = {
 />
 ```
 
-5. Get the Stripe instance in `src/components/organisms/Billing/Billing.js`
+6. Get the Stripe instance in `src/components/organisms/Billing/Billing.js`
 
 ```javascript
 // The useStripe hook returns a reference to the Stripe instance passed to the Elements provider.
 const stripe = useStripe();
 ```
 
-6. Get the Stripe form components in `src/components/organisms/Billing/Billing.js`
+7. Get the Stripe form components in `src/components/organisms/Billing/Billing.js`
 
 ```javascript
 // To safely pass the payment information collected by an Element to the Stripe API, access the component’s underlying Element instance so that you can use it with other Stripe.js methods.
 const elements = useElements();
 ```
 
-7. Respond to the form submission in the `onSubmit` function in `src/components/organisms/Billing/Billing.js`
+8. Respond to the form submission in the `onSubmit` function in `src/components/organisms/Billing/Billing.js`
 
-7a. disable form submission until Stripe has loaded
+8a. disable form submission until Stripe has loaded
 
 ```javascript
 const isStripeLoading = !stripe || !elements;
@@ -140,7 +145,7 @@ if (isStripeLoading) {
 }
 ```
 
-7b. Create a payment intent and get a client secret from the server. The client secret should still be handled carefully because it can complete the charge. Do not log it, embed it in URLs, or expose it to anyone but the customer.
+8b. Create a payment intent and get a client secret from the server. The client secret should still be handled carefully because it can complete the charge. Do not log it, embed it in URLs, or expose it to anyone but the customer.
 
 ```javascript
 try {
@@ -156,7 +161,7 @@ try {
 }
 ```
 
-7c. Confirm the payment
+8c. Confirm the payment
 
 ```javascript
 const getBillingDetails = (values) => {
@@ -186,7 +191,7 @@ const cardPayment = await stripe.confirmCardPayment(clientSecret, {
 });
 ```
 
-7d. Handle success and error cases
+8d. Handle success and error cases
 
 ```javascript
 const handleCardElementsChange = (event) => {
@@ -212,7 +217,7 @@ try {
 }
 ```
 
-7e. Handle success case by clearing the cart and redirecting to the success page
+8e. Handle success case by clearing the cart and redirecting to the success page
 
 ```javascript
 const afterPaymentSuccess = (paymentIntent) => {
@@ -230,7 +235,7 @@ const afterPaymentSuccess = (paymentIntent) => {
 };
 ```
 
-8. Create the payment intent on the server and return the client secret in `server/routes/payment.js`. The client secret should still be handled carefully because it can complete the charge. Do not log it, embed it in URLs, or expose it to anyone but the customer.
+9. Create the payment intent on the server and return the client secret in `server/routes/payment.js`. The client secret should still be handled carefully because it can complete the charge. Do not log it, embed it in URLs, or expose it to anyone but the customer.
 
 ```javascript
 router.post('/secret', async (req, res) => {
@@ -262,7 +267,7 @@ router.post('/secret', async (req, res) => {
 });
 ```
 
-9. Use webhooks to respond to offline payment events, instead of responding to the payment response on the client side because the customer can close the page. Using the webhook you can send an order confirmation email to your customer, log the sale in a database, or start a shipping workflow.
+10. Use webhooks to respond to offline payment events, instead of responding to the payment response on the client side because the customer can close the page. Using the webhook you can send an order confirmation email to your customer, log the sale in a database, or start a shipping workflow.
 
 ```javascript
 // in server/app.js
@@ -330,7 +335,7 @@ router.post('/webhook', (req, res) => {
 });
 ```
 
-10. Test the webhook.
+11. Test the webhook.
 
 - Install the [stripe cli](https://stripe.com/docs/stripe-cli) and login
 - run `stripe listen --forward-to http://localhost:5000/payment/webhook`
@@ -338,11 +343,11 @@ router.post('/webhook', (req, res) => {
 - in another terminal window, run `stripe trigger payment_intent.succeeded`
 - After trigger succeeds, you should see in the other window, status `200` and that the charge and payment intent succeeded. Your server will also log `PaymentIntent was created! POST /payment/webhook 200`
 
-11. Test the integration with our [test cards](https://stripe.com/docs/payments/accept-a-payment#web-test-integration).
+12. Test the integration with our [test cards](https://stripe.com/docs/payments/accept-a-payment#web-test-integration).
 
-12. Activate your account in the Stripe dashboard to get your live API keys.
+13. Activate your account in the Stripe dashboard to get your live API keys.
 
-13. Enjoy and thank you for using Stripe! If you need any more help just let us know. It's our pleasure to help you.
+14. Enjoy and thank you for using Stripe! If you need any more help just let us know. It's our pleasure to help you.
 
 ## Available Scripts
 
