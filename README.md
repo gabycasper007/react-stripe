@@ -9,6 +9,7 @@
 - The react app has the components organized following an [atomic design structure](https://medium.com/better-programming/atomic-design-for-developers-part-1-b41e547a555c)
 - The react app is using functional components with [hooks](https://reactjs.org/docs/hooks-intro.html)
 - Form validation logic is done in `src/helpers/validation.js` which might look intimidating when you want to add new validation rules, but it offers a scalable solution. Extending validation for new inputs with similar rules is extremely easy because of this file. All you need to do is add your new input in `src/constants/validation.js` and let the magic happen. You can specify if the field should be `required`, the type of field, `minLength` and `maxLength`. When the customer doesn't respect the validation rules, the app will show the appropriate errors.
+- The customer won't be able to submit the checkout form multiple times. Once he submits, the submit button will be disable until either the payment is made, the server returns an error, or the server is not reachable. The customer will see the appropriate error and will be able to try again. Once the payment is made, he will be redirected to a success page.
 
 ## How to run this app
 
