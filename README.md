@@ -8,26 +8,26 @@
 - The react part is the the root folder, while the express part is in the `server` folder.
 - The react app has the components organized following an [atomic design structure](https://medium.com/better-programming/atomic-design-for-developers-part-1-b41e547a555c)
 - The react app is using functional components with [hooks](https://reactjs.org/docs/hooks-intro.html)
-- Form validation logic is done in `src/helpers/validation.js` which might look intimidating when you want to add new validation rules, but it offers a scalable solution and extending validation for new inputs with similar rules is extremely ease because of this file. All you need to do is add your new input in `src/constants/validation.js` and let the magic happen. You can specify if the field should be `required`, type of field, `minLength` and `maxLength`. When validation is broken by the customer, the app will show the appropriate errors.
+- Form validation logic is done in `src/helpers/validation.js` which might look intimidating when you want to add new validation rules, but it offers a scalable solution. Extending validation for new inputs with similar rules is extremely easy because of this file. All you need to do is add your new input in `src/constants/validation.js` and let the magic happen. You can specify if the field should be `required`, the type of field, `minLength` and `maxLength`. When the customer doesn't respect the validation rules, the app will show the appropriate errors.
 
 ## How to run this app
 
-1. Rename `.env.example` to `.env` and change the keys with your own. Every time you change your env variables you will need to restart the app.
+1. Rename `.env.example` to `.env` and change the keys with your own from Stripe dashboard. Every time you change your env variables you will need to restart the app.
 2. Rename `server/.env.example` to `server/.env` and change the keys with your own.
 3. Into your root path, run `npm i` to install the packages on the front end, than start the front end server with `npm start`
 4. Into your root path, run `cd server` and `npm i` to install the packages on the back end and start the back end server with `npm start`
 5. Open http://localhost:3000 to view it in the browser.
 
-## Stripe integration
+## Stripe integration explanation
 
-1. Load stripe in the react app in `src/index.js`:
+1. Load Stripe in the react app in `src/index.js`:
 
 ```javascript
 import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 ```
 
-2. Wrap your app with the stripe promise
+2. Wrap your app with the Stripe promise
 
 ```javascript
 import { Elements } from '@stripe/react-stripe-js';
@@ -38,7 +38,7 @@ import { Elements } from '@stripe/react-stripe-js';
 
 3. In `src/components/molecules/CardSection/CardSection.js`,
 
-3a. Create the stripe elements and respond to input changes
+3a. Create the Stripe elements and respond to input changes
 
 ```javascript
 import {
@@ -81,7 +81,7 @@ const CARD_ELEMENT_OPTIONS = {
   }
 };
 
-// add the options object on every stripe card element
+// add the options object on every Stripe card element
 <CardNumberElement onChange={handleChange}
           options={CARD_ELEMENT_OPTIONS} />
 
@@ -90,7 +90,7 @@ const CARD_ELEMENT_OPTIONS = {
 <CardCvcElement onChange={handleChange} options={CARD_ELEMENT_OPTIONS} />
 ```
 
-3c. Stop user from submitting multiple times, in order to avoid multiple charges. Also, show stripe error if any
+3c. Stop the user from submitting multiple times, in order to avoid multiple charges. Also, show the Stripe error if any
 
 ```javascript
 <button type="submit" disabled={!stripe || isSubmitting}>
@@ -101,7 +101,7 @@ const CARD_ELEMENT_OPTIONS = {
 }
 ```
 
-4. Include the `CardSection` in the `Formik` form in `src/components/organisms/Billing/Billing.js`
+4. Include the `CardSection` component inside the `Formik` form in `src/components/organisms/Billing/Billing.js`
 
 ```javascript
 <CardSection
@@ -112,14 +112,14 @@ const CARD_ELEMENT_OPTIONS = {
 />
 ```
 
-5. Get the stripe instance in `src/components/organisms/Billing/Billing.js`
+5. Get the Stripe instance in `src/components/organisms/Billing/Billing.js`
 
 ```javascript
 // The useStripe hook returns a reference to the Stripe instance passed to the Elements provider.
 const stripe = useStripe();
 ```
 
-6. Get the stripe form components in `src/components/organisms/Billing/Billing.js`
+6. Get the Stripe form components in `src/components/organisms/Billing/Billing.js`
 
 ```javascript
 // To safely pass the payment information collected by an Element to the Stripe API, access the component’s underlying Element instance so that you can use it with other Stripe.js methods.
@@ -238,7 +238,7 @@ router.post('/secret', async (req, res) => {
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       // Always decide how much to charge on the server side, a trusted environment, as opposed to the client. This prevents malicious customers from being able to choose their own prices.
-      amount: calculateTotal(products) * 100, // Stripe used amount in cents
+      amount: calculateTotal(products) * 100, // Stripe uses amount in cents
       currency: 'sgd',
       payment_method_types: ['card'],
       receipt_email: email, // customer email, used for invoices and confirmations
@@ -339,7 +339,7 @@ router.post('/webhook', (req, res) => {
 
 11. Test the integration with our [test cards](https://stripe.com/docs/payments/accept-a-payment#web-test-integration).
 
-12. Activate your account in the stripe dashboard to get your live API keys.
+12. Activate your account in the Stripe dashboard to get your live API keys.
 
 13. Enjoy and thank you for using Stripe! If you need any more help just let us know. It's our pleasure to help you.
 

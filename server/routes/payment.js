@@ -15,7 +15,7 @@ router.post('/secret', async (req, res) => {
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       // Always decide how much to charge on the server side, a trusted environment, as opposed to the client. This prevents malicious customers from being able to choose their own prices.
-      amount: calculateTotal(products) * 100, // Stripe used amount in cents
+      amount: calculateTotal(products) * 100, // Stripe uses amount in cents
       currency: 'sgd',
       payment_method_types: ['card'],
       receipt_email: email, // customer email, used for invoices and confirmations
